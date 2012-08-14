@@ -1,0 +1,66 @@
+<button id="opener" onclick="openMyModal('geoloc_from_to.html'); return false;" title="get your route">get your route</button>
+<style type="text/css">
+.close-window {
+			width: 40px;
+			height: 40px;
+			top: 30px;
+			background: transparent url('./images/close_dialog.png') no-repeat scroll right top;
+			text-indent: -99999px;
+			overflow: hidden;
+			cursor: pointer;
+			opacity: 1;
+			position: absolute;
+			filter: alpha(opacity=50);
+			-moz-opacity: 0.5;
+}
+</style>
+<script src="./js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="./js/jquery-ui-1.8.21.custom.min.js"></script>
+<script>
+	$.fx.speeds._default = 1000;
+	$(function() {
+		$( "#opener" ).click(function() {
+			$( "#dialog" ).dialog( "open" );
+				return false;
+		});
+	});
+</script>
+<script type="text/javascript" lang="javascript">
+	var openMyModal = function(source)
+	{
+		modalWindow.windowId = "myModal";
+		modalWindow.width = 800;
+		modalWindow.height = 500;
+		modalWindow.content = "<iframe width='800' height='600' frameborder='0' allowtransparency='true' style='background-color:rgb(26,86,49);' src='" + source + "'>&lt/iframe>";
+		modalWindow.open();
+	};	
+	var modalWindow = {
+		parent:"body",
+		windowId:null,
+		content:null,
+		width:null,
+		height:null,
+		
+		close:function()
+		{
+			$(".modal-window").remove();
+			$(".modal-overlay").remove();
+			$(".modal-window").fadeTo(500); 
+			
+		},
+		open:function()
+		{
+			var modal = "";
+			modal += "<div class=\"modal-overlay\"></div>";
+			modal += "<div id=\"" + this.windowId + "\" class=\"modal-window\" style=\"width:" + this.width + "px; height:" + this.height + "px; \">";
+			modal += this.content;
+			modal += "</div>";	
+			
+			$(this.parent).append(modal);
+	
+			$(".modal-window").append("<a class=\"close-window\"></a>");
+			$(".close-window").click(function(){modalWindow.close();});
+			$(".modal-overlay").click(function(){modalWindow.close();});
+		}
+	};
+</script>
